@@ -2,10 +2,9 @@ package com.LeahGrace.AuthenticatedSpringBootAPI.employees;
 
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Field;
+import java.sql.SQLOutput;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
@@ -24,6 +23,8 @@ public class EmployeeController {
     public EmployeeController() {
         Long id = idCounter.incrementAndGet();
         employees.put(id, new Employee(id,"Jim", "Semicolon Finder", 25));
+        id = idCounter.incrementAndGet();
+        employees.put(id, new Employee(id, "Keith", "Comedian", 26));
     }
 
     //Create - create one employee
@@ -36,6 +37,11 @@ public class EmployeeController {
         return new ArrayList<Employee>(employees.values());
     }
 
+    @GetMapping("/{id}")
+    public Employee employe(@PathVariable Long id) {
+        return employees.get(id);
+    }
+
     @PostMapping
     public Employee newEmployee(@RequestBody Employee newEmployee) {
         Long id = idCounter.incrementAndGet();
@@ -44,8 +50,25 @@ public class EmployeeController {
         return newEmployee;
     }
 
-    @GetMapping("/{id}")
-    public Employee employe(@PathVariable Long id) {
-        return employees.get(id);
+    //Update - update one employee by id - - commonly authenticated
+    @PutMapping("/{id}")
+    public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee updateData) {
+        Employee emp = employees.get(id);
+
+        if(updateData.getName() != null) {
+            emp.setName(updateData.getName());
+        }
+        if(updateData.getRole() != null) {
+            emp.setRole(updateData.getRole());
+        }
+        if(updateData.getAge() != null){
+            emp.setAge(updateData.getAge());
+        }
+
+
+        return emp;
+
     }
+
+
 }

@@ -55,6 +55,10 @@ public class EmployeeController {
     public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee updateData) {
         Employee emp = employees.get(id);
 
+        if (emp == null) {
+            return emp;
+        }
+
         if(updateData.getName() != null) {
             emp.setName(updateData.getName());
         }
@@ -65,10 +69,13 @@ public class EmployeeController {
             emp.setAge(updateData.getAge());
         }
 
-
         return emp;
 
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteEmployee(@PathVariable Long id) {
+        employees.remove(id);
+    }
 
 }

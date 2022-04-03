@@ -20,13 +20,20 @@ public class Employee {
         this.age = age;
     }
 
+    public Employee(Long id, String name, String role, Integer age) {
+        this.id = id;
+        this.name = name;
+        this.role = role;
+        this.age = age;
+    }
+
     public Long getId() {
         return id;
     }
 
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
